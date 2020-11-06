@@ -1,0 +1,42 @@
+{
+  "name": "someonefamous/permission-tree",
+  "description": "Hierarchical permissions system for Laravel apps.",
+  "keywords": ["laravel", "permission", "access", "control"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Someone Famous",
+      "email": "someonefamous@password99.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "someonefamous/laravel-findby": "^1.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.0",
+    "phpunit/phpunit": "^9.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "SomeoneFamous\\PermissionTree\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SomeoneFamous\\PermissionTree\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SomeoneFamous\\PermissionTree\\PermissionTreeServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-f": "vendor/bin/phpunit --filter"
+  }
+}
