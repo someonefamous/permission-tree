@@ -42,18 +42,20 @@ trait HasPermissions
 
     public function addPermission(Permission $permission)
     {
-        if ($parent = $permission->parent()->first()) {
+        if (!$this->hasPermission($permission)) {
+            if ($parent = $permission->parent()->first()) {
 
-            if ($permission->hasSameStatusAsParent($this)) {
-                $this->permissions()->attach($permission->id);
+                if ($permission->hasSameStatusAsParent($this)) {
+                    $this->permissions()->attach($permission->id);
+                } else {
+                    $this->permissions()->detach($permission->id);
+                }
+
+                $permission->detachAllChildren($this);
             } else {
-                $this->permissions()->detach($permission->id);
+                $this->permissions()->detach();
+                $this->permissions()->attach($permission->id);
             }
-
-            $permission->detachAllChildren($this);
-        } else {
-            $this->permissions()->detach();
-            $this->permissions()->attach($permission->id);
         }
 
         return $this;
@@ -61,17 +63,19 @@ trait HasPermissions
 
     public function removePermission(Permission $permission)
     {
-        if ($parent = $permission->parent()->first()) {
+        if ($this->hasPermission($permission)) {
+            if ($parent = $permission->parent()->first()) {
 
-            $permission->detachAllChildren($this);
+                $permission->detachAllChildren($this);
 
-            if ($permission->hasSameStatusAsParent($this)) {
-                $this->permissions()->attach($permission->id, ['allowed' => false]);
+                if ($permission->hasSameStatusAsParent($this)) {
+                    $this->permissions()->attach($permission->id, ['allowed' => false]);
+                } else {
+                    $this->permissions()->detach($permission->id);
+                }
             } else {
-                $this->permissions()->detach($permission->id);
+                $this->permissions()->detach();
             }
-        } else {
-            $this->permissions()->detach();
         }
 
         return $this;
