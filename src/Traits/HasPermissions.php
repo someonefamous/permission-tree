@@ -46,6 +46,7 @@ trait HasPermissions
             if ($parent = $permission->parent()->first()) {
 
                 if ($permission->hasSameStatusAsParent($this)) {
+                    $this->permissions()->detach($permission->id);
                     $this->permissions()->attach($permission->id);
                 } else {
                     $this->permissions()->detach($permission->id);
@@ -69,6 +70,7 @@ trait HasPermissions
                 $permission->detachAllChildren($this);
 
                 if ($permission->hasSameStatusAsParent($this)) {
+                    $this->permissions()->detach($permission->id);
                     $this->permissions()->attach($permission->id, ['allowed' => false]);
                 } else {
                     $this->permissions()->detach($permission->id);
@@ -93,6 +95,7 @@ trait HasPermissions
     public function dontAllowTo($permission_code)
     {
         if ($permission = Permission::findByCode($permission_code)) {
+
             $this->removePermission($permission);
         }
 
