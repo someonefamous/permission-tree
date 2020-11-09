@@ -28,6 +28,8 @@ class PermissionTreeServiceProvider extends ServiceProvider
             ], 'config');
         }
 
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'sf_permissions');
+
         $this->registerRoutes();
     }
 
