@@ -12,25 +12,20 @@ class SetUpPermissionsTables extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('parent_id')->nullable()->default(1);
+            $table->foreignId('parent_id')->nullable()->default(1)->constrained('permissions');
             $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();
-
-            $table->foreign('parent_id')->references('id')->on('permissions');
         });
 
         Schema::create('permission_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('permission_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('permission_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->boolean('allowed')->default(true);
             $table->timestamps();
 
             $table->unique(['permission_id', 'user_id']);
-
-            $table->foreign('permission_id')->references('id')->on('permissions');
-            $table->foreign('user_id')->references('id')->on('users');
         });
 
         if (!App::runningUnitTests()) {
