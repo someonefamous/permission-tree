@@ -2,8 +2,8 @@
 
 namespace SomeoneFamous\PermissionTree\Traits;
 
-use SomeoneFamous\PermissionTree\Models\Permission;
 use Illuminate\Support\Str;
+use SomeoneFamous\PermissionTree\Models\Permission;
 
 trait HasPermissions
 {

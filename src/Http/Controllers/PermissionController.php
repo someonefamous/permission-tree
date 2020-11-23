@@ -11,7 +11,6 @@ class PermissionController extends Controller
         $permissions = Permission::all();
 
         return view('sf_permissions::permissions.index', ['permissions' => $permissions]);
-
     }
 
     public function show(Permission $permission)

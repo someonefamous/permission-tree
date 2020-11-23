@@ -3,9 +3,8 @@
 namespace SomeoneFamous\PermissionTree\Models;
 
 use App\Models\User;
-use SomeoneFamous\FindBy\FindBy;
 use Illuminate\Database\Eloquent\Model;
-
+use SomeoneFamous\FindBy\FindBy;
 
 class Permission extends Model
 {
