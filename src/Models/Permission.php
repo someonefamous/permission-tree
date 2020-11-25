@@ -2,7 +2,6 @@
 
 namespace SomeoneFamous\PermissionTree\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use SomeoneFamous\FindBy\FindBy;
 
@@ -16,13 +15,6 @@ class Permission extends Model
         'name',
     ];
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class)
-            ->withTimestamps()
-            ->withPivot('allowed');
-    }
-
     public function parent()
     {
         return $this->belongsTo(self::class);
@@ -33,19 +25,19 @@ class Permission extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public function hasSameStatusAsParent(User $user): bool
+    public function hasSameStatusAsParent($user): bool
     {
         return (($parent = $this->parent) && ($user->hasPermission($this) == $user->hasPermission($parent)));
     }
 
-    public function detachAllChildren(User $user)
+    public function detachAllChildren($subject)
     {
         if ($this->children()->count() > 0) {
 
             foreach ($this->children as $child) {
 
-                $user->permissions()->detach($child->id);
-                $child->detachAllChildren($user);
+                $subject->permissions()->detach($child->id);
+                $child->detachAllChildren($subject);
             }
         }
     }
