@@ -27,7 +27,7 @@ trait HasPermissions
 
     public function permissions()
     {
-        return $this->morphToMany(Permission::class, 'subject')->withTimestamps()->withPivot('allowed');
+        return $this->morphToMany(Permission::class, 'permittable')->withTimestamps()->withPivot('allowed');
     }
 
     public function allowedPermissions()
