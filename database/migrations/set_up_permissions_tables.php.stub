@@ -17,15 +17,18 @@ class SetUpPermissionsTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('permission_user', function (Blueprint $table) {
+        Schema::create('permittables', function (Blueprint $table) {
             $table->id();
             $table->foreignId('permission_id')->constrained();
-            $table->unsignedBigInteger('subject_id')->nullable();
-            $table->string('subject_type')->nullable();
+            $table->unsignedBigInteger('permittable_id')->nullable();
+            $table->string('permittable_type')->nullable();
             $table->boolean('allowed')->default(true);
             $table->timestamps();
 
-            $table->unique(['permission_id', 'subject_id', 'subject_type']);
+            $table->unique(
+                ['permission_id', 'permittable_id', 'permittable_type'],
+                'permissions_permittable_unique'
+            );
         });
 
         if (!App::runningUnitTests()) {
