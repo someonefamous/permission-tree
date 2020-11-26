@@ -83,7 +83,7 @@ trait HasPermissions
         return $this;
     }
 
-    public function allowTo($permission_code)
+    public function allowTo(string $permission_code)
     {
         if ($permission = Permission::findByCode($permission_code)) {
             $this->addPermission($permission);
@@ -92,7 +92,7 @@ trait HasPermissions
         return $this;
     }
 
-    public function dontAllowTo($permission_code)
+    public function dontAllowTo(string $permission_code)
     {
         if ($permission = Permission::findByCode($permission_code)) {
 
@@ -127,7 +127,7 @@ trait HasPermissions
         return false;
     }
 
-    public function can($permission_code, $value = null): bool
+    public function can(string $permission_code): bool
     {
         return ($permission = Permission::findByCode($permission_code))
             ? $this->hasPermission($permission)
