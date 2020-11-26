@@ -127,7 +127,7 @@ trait HasPermissions
         return false;
     }
 
-    public function can($permission_code): bool
+    public function can($permission_code, $arguments = []): bool
     {
         return ($permission = Permission::findByCode($permission_code))
             ? $this->hasPermission($permission)
