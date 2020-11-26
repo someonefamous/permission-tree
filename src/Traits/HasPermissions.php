@@ -13,10 +13,10 @@ trait HasPermissions
     {
         foreach (['can', 'allowTo', 'dontAllowTo'] as $custom_method) {
 
-            if (strpos($method, $custom_method) === 0) {
+            if (Str::startsWith($method, $custom_method)) {
 
                 return $this->{$custom_method}(
-                    Str::snake(substr($method, strlen($custom_method))),
+                    Str::snake(Str::after($method, $custom_method)),
                     array_shift($arguments)
                 );
             }
