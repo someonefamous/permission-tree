@@ -3,7 +3,7 @@
 namespace SomeoneFamous\PermissionTree\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use SomeoneFamous\FindBy\FindBy;
+use SomeoneFamous\FindBy\Traits\FindBy;
 
 class Permission extends Model
 {
