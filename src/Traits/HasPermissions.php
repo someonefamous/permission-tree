@@ -9,20 +9,20 @@ trait HasPermissions
 {
     public $permissions_cache = [];
 
-    public function __call($method, $arguments)
+    public function __call($called_method, $arguments)
     {
-        foreach (['can', 'allowTo', 'dontAllowTo'] as $custom_method) {
+        foreach (['can', 'allowTo', 'dontAllowTo'] as $method) {
 
-            if (Str::startsWith($method, $custom_method)) {
+            if (Str::startsWith($called_method, $method)) {
 
-                return $this->{$custom_method}(
-                    Str::snake(Str::after($method, $custom_method)),
+                return $this->{$method}(
+                    Str::snake(Str::after($called_method, $method)),
                     array_shift($arguments)
                 );
             }
         }
 
-        return parent::__call($method, $arguments);
+        return parent::__call($called_method, $arguments);
     }
 
     public function permissions()
