@@ -15,13 +15,6 @@ class PermissionTreeServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            if (!class_exists('SetUpPermissionsTables')) {
-                $this->publishes([
-                    __DIR__ . '/../database/migrations/set_up_permissions_tables.php.stub' => database_path(
-                        'migrations/' . date('Y_m_d_His') . '_set_up_permissions_tables.php'
-                    )
-                ], 'migrations');
-            }
 
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('sf_permissions.php')
