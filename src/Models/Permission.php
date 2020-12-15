@@ -25,19 +25,22 @@ class Permission extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public function hasSameStatusAsParent($user): bool
+    public function hasSameStatusAsParent($permittable): bool
     {
-        return (($parent = $this->parent) && ($user->hasPermission($this) == $user->hasPermission($parent)));
+        return (
+            ($parent = $this->parent) &&
+            ($permittable->hasPermission($this) == $permittable->hasPermission($parent))
+        );
     }
 
-    public function detachAllChildren($subject)
+    public function detachAllChildren($permittable)
     {
         if ($this->children()->count() > 0) {
 
             foreach ($this->children as $child) {
 
-                $subject->permissions()->detach($child->id);
-                $child->detachAllChildren($subject);
+                $permittable->permissions()->detach($child->id);
+                $child->detachAllChildren($permittable);
             }
         }
     }

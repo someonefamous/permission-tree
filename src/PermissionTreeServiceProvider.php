@@ -23,6 +23,8 @@ class PermissionTreeServiceProvider extends ServiceProvider
                 ], 'migrations');
             }
 
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
             $this->publishes([
                 __DIR__ . '/../config/config.php' => config_path('sf_permissions.php')
             ], 'config');
