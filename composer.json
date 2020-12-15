@@ -19,6 +19,9 @@
     "phpunit/phpunit": "^9.4"
   },
   "autoload": {
+    "classmap": [
+      "database/migrations"
+    ],
     "psr-4": {
       "SomeoneFamous\\PermissionTree\\": "src"
     }
