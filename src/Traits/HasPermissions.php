@@ -15,9 +15,8 @@ trait HasPermissions
 
             if (Str::startsWith($called_method, $method)) {
 
-                return $this->{$method}(
-                    Str::snake(Str::after($called_method, $method)),
-                    array_shift($arguments)
+                return $this->$method(
+                    Str::snake(Str::after($called_method, $method)), $arguments[0]
                 );
             }
         }
@@ -86,6 +85,7 @@ trait HasPermissions
     public function allowTo(string $permission_code)
     {
         if ($permission = Permission::findByCode($permission_code)) {
+
             $this->addPermission($permission);
         }
 
@@ -105,6 +105,7 @@ trait HasPermissions
     public function hasPermission(Permission $permission): bool
     {
         if (array_key_exists($permission->id, $this->permissions_cache)) {
+
             return $this->permissions_cache[$permission->id];
         }
 
